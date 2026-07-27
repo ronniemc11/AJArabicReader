@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">أخبار الجزيرة</string>
+    <string name="loading">جاري التحميل...</string>
+    <string name="error_network">تعذر الاتصال بالشبكة. يرجى المحاولة مرة أخرى.</string>
+    <string name="error_parse">تعذر تحميل الأخبار.</string>
+    <string name="retry">إعادة المحاولة</string>
+    <string name="open_in_browser">فتح في المتصفح</string>
+</resources>
