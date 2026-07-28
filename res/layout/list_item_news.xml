@@ -2,38 +2,53 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:padding="10px"
     android:background="#FFFFFF">
 
-    <TextView
-        android:id="@+id/headline"
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:textColor="#111111"
-        android:textSize="17px"
-        android:textStyle="bold"
-        android:gravity="right"
-        android:lineSpacingExtra="3px" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/summary"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#444444"
-        android:textSize="14px"
-        android:gravity="right"
-        android:layout_marginTop="4px"
-        android:maxLines="3"
-        android:ellipsize="end" />
+        <TextView
+            android:id="@+id/headline"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#111111"
+            android:textSize="17px"
+            android:textStyle="bold"
+            android:gravity="right"
+            android:lineSpacingExtra="3px" />
 
-    <TextView
-        android:id="@+id/timestamp"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#999999"
-        android:textSize="11px"
-        android:gravity="right"
-        android:layout_marginTop="6px" />
+        <TextView
+            android:id="@+id/summary"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#444444"
+            android:textSize="14px"
+            android:gravity="right"
+            android:layout_marginTop="4px"
+            android:maxLines="3"
+            android:ellipsize="end" />
+
+        <TextView
+            android:id="@+id/timestamp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#999999"
+            android:textSize="11px"
+            android:gravity="right"
+            android:layout_marginTop="6px" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/thumbnail"
+        android:layout_width="90px"
+        android:layout_height="90px"
+        android:layout_marginLeft="10px"
+        android:scaleType="centerCrop"
+        android:background="@drawable/thumbnail_placeholder" />
 
 </LinearLayout>
