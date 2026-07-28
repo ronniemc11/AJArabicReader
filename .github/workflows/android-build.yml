@@ -17,6 +17,13 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Set up Android SDK
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 31
+          arch: x86_64
+          force-avd-creation: false
+
       - name: Ensure Gradle wrapper is executable if present
         run: |
           if [ -f ./gradlew ]; then
