@@ -30,5 +30,9 @@
             android:name=".ArticleActivity"
             android:label="@string/app_name" />
 
+        <activity
+            android:name=".LiveActivity"
+            android:label="@string/live" />
+
     </application>
 </manifest>
