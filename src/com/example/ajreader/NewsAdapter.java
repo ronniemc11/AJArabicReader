@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class NewsAdapter extends ArrayAdapter<NewsItem> {
         TextView headline;
         TextView summary;
         TextView timestamp;
+        ImageView thumbnail;
     }
 
     @Override
@@ -35,6 +37,7 @@ public class NewsAdapter extends ArrayAdapter<NewsItem> {
             holder.headline = (TextView) convertView.findViewById(R.id.headline);
             holder.summary = (TextView) convertView.findViewById(R.id.summary);
             holder.timestamp = (TextView) convertView.findViewById(R.id.timestamp);
+            holder.thumbnail = (ImageView) convertView.findViewById(R.id.thumbnail);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -44,6 +47,7 @@ public class NewsAdapter extends ArrayAdapter<NewsItem> {
         holder.headline.setText(item.title);
         holder.summary.setText(item.description);
         holder.timestamp.setText(RelativeTime.format(item.pubDate));
+        ImageLoader.load(holder.thumbnail, item.imageUrl);
 
         return convertView;
     }
