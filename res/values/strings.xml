@@ -6,4 +6,18 @@
     <string name="error_parse">تعذر تحميل الأخبار.</string>
     <string name="retry">إعادة المحاولة</string>
     <string name="open_in_browser">فتح في المتصفح</string>
+    <string name="live">مباشر</string>
+
+    <string name="tab_home">الرئيسية</string>
+    <string name="tab_sports">رياضة</string>
+    <string name="tab_middle_east">الشرق الأوسط</string>
+    <string name="tab_world">العالم</string>
+
+    <string name="nav_news">الأخبار</string>
+    <string name="nav_video">فيديو</string>
+    <string name="nav_live">مباشر</string>
+    <string name="nav_settings">إعدادات</string>
+
+    <string name="live_not_available">البث المباشر غير متوفر حالياً على هذا الجهاز.</string>
+    <string name="feature_not_available">هذه الميزة غير متوفرة حالياً.</string>
 </resources>
