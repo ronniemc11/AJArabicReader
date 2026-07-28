@@ -1,13 +1,24 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.1.0'
+    }
+}
+
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.1.0"
+    namespace "com.example.ajreader"
+    compileSdkVersion 33
+    buildToolsVersion "33.0.2"
 
     defaultConfig {
         applicationId "com.example.ajreader"
         minSdkVersion 9
-        targetSdkVersion 10
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
     }
