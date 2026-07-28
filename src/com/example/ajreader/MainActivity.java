@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +23,13 @@ public class MainActivity extends Activity {
     private View errorView;
     private TextView errorText;
     private Button retryButton;
+    private LinearLayout tabRow;
 
     private List<NewsItem> items = new ArrayList<NewsItem>();
     private NewsAdapter adapter;
+
+    private static final String[] TAB_KEYS = {"home", "sports", "middle_east", "world"};
+    private String selectedTab = "home";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +41,7 @@ public class MainActivity extends Activity {
         errorView = findViewById(R.id.error_view);
         errorText = (TextView) findViewById(R.id.error_text);
         retryButton = (Button) findViewById(R.id.retry_button);
+        tabRow = (LinearLayout) findViewById(R.id.tab_row);
 
         adapter = new NewsAdapter(this, items);
         newsList.setAdapter(adapter);
@@ -58,7 +66,88 @@ public class MainActivity extends Activity {
             }
         });
 
+        setupTabs();
+        setupBottomNav();
+
         loadFeed();
+    }
+
+    private void setupTabs() {
+        String[] labels = {
+                getString(R.string.tab_home),
+                getString(R.string.tab_sports),
+                getString(R.string.tab_middle_east),
+                getString(R.string.tab_world)
+        };
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        tabRow.removeAllViews();
+
+        for (int i = 0; i < TAB_KEYS.length; i++) {
+            final String key = TAB_KEYS[i];
+            TextView tab = (TextView) inflater.inflate(R.layout.tab_item, tabRow, false);
+            tab.setText(labels[i]);
+            updateTabStyle(tab, key.equals(selectedTab));
+            tab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onTabSelected(key);
+                }
+            });
+            tabRow.addView(tab);
+        }
+    }
+
+    private void updateTabStyle(TextView tab, boolean selected) {
+        if (selected) {
+            tab.setTextColor(0xFFD9A441);
+            tab.setBackgroundResource(R.drawable.bg_tab_selected);
+        } else {
+            tab.setTextColor(0xFFAAAAAA);
+            tab.setBackgroundColor(0x00000000);
+        }
+    }
+
+    private void onTabSelected(String key) {
+        selectedTab = key;
+        for (int i = 0; i < tabRow.getChildCount(); i++) {
+            TextView tab = (TextView) tabRow.getChildAt(i);
+            updateTabStyle(tab, TAB_KEYS[i].equals(key));
+        }
+
+        if ("home".equals(key)) {
+            loadFeed();
+        } else {
+            items.clear();
+            adapter.notifyDataSetChanged();
+            showError(getString(R.string.feature_not_available));
+        }
+    }
+
+    private void setupBottomNav() {
+        findViewById(R.id.nav_news).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+        findViewById(R.id.nav_live).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, LiveActivity.class));
+            }
+        });
+        findViewById(R.id.nav_video).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, R.string.feature_not_available, Toast.LENGTH_SHORT).show();
+            }
+        });
+        findViewById(R.id.nav_settings).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, R.string.feature_not_available, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void loadFeed() {
