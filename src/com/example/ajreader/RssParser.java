@@ -22,6 +22,7 @@ public class RssParser {
         String description = null;
         String link = null;
         String pubDate = null;
+        String imageUrl = null;
 
         while (eventType != XmlPullParser.END_DOCUMENT) {
             String tagName;
@@ -34,6 +35,7 @@ public class RssParser {
                         description = null;
                         link = null;
                         pubDate = null;
+                        imageUrl = null;
                     } else if (inItem && "title".equalsIgnoreCase(tagName)) {
                         title = safeNextText(parser);
                     } else if (inItem && "description".equalsIgnoreCase(tagName)) {
@@ -42,6 +44,19 @@ public class RssParser {
                         link = safeNextText(parser);
                     } else if (inItem && "pubDate".equalsIgnoreCase(tagName)) {
                         pubDate = safeNextText(parser);
+                    } else if (inItem && "enclosure".equalsIgnoreCase(tagName)) {
+                        String url = parser.getAttributeValue(null, "url");
+                        String type = parser.getAttributeValue(null, "type");
+                        if (url != null && (type == null || type.startsWith("image"))) {
+                            imageUrl = url;
+                        }
+                    } else if (inItem && ("media:thumbnail".equalsIgnoreCase(tagName)
+                            || "thumbnail".equalsIgnoreCase(tagName)
+                            || "media:content".equalsIgnoreCase(tagName))) {
+                        String url = parser.getAttributeValue(null, "url");
+                        if (url != null && imageUrl == null) {
+                            imageUrl = url;
+                        }
                     }
                     break;
                 case XmlPullParser.END_TAG:
@@ -52,7 +67,8 @@ public class RssParser {
                                 stripHtml(title),
                                 stripHtml(description),
                                 link == null ? "" : link.trim(),
-                                pubDate == null ? "" : pubDate.trim()
+                                pubDate == null ? "" : pubDate.trim(),
+                                imageUrl
                         ));
                     }
                     break;
@@ -74,6 +90,14 @@ public class RssParser {
 
     private static String stripHtml(String text) {
         if (text == null) return "";
-        return text.replaceAll("<[^>]+>", "").trim();
+        String result = text.replaceAll("<[^>]+>", "").trim();
+        result = result.replace("&quot;", "\"");
+        result = result.replace("&amp;", "&");
+        result = result.replace("&#39;", "'");
+        result = result.replace("&apos;", "'");
+        result = result.replace("&lt;", "<");
+        result = result.replace("&gt;", ">");
+        result = result.replace("&nbsp;", " ");
+        return result;
     }
 }
