@@ -193,9 +193,13 @@ public class MainActivity extends Activity {
             if (isFinishing()) return;
 
             if (result == null || error != null) {
-                showError(getString(R.string.error_network));
-                return;
-            }
+    String detail = (error != null && error.getMessage() != null)
+            ? error.getClass().getSimpleName() + ": " + error.getMessage()
+            : "unknown error";
+    showError(getString(R.string.error_network) + "\n\n[DEBUG] " + detail);
+    return;
+}
+
             if (result.isEmpty()) {
                 showError(getString(R.string.error_parse));
                 return;
